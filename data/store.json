@@ -1,0 +1,16 @@
+{
+  "smtp": {
+    "enabled": false,
+    "host": "",
+    "port": 465,
+    "secure": true,
+    "user": "",
+    "pass": "",
+    "from": ""
+  },
+  "logs": [],
+  "progress": {
+    "nextContentIndex": 0
+  },
+  "users": {}
+}

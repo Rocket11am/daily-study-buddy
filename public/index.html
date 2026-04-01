@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Study Buddy</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Daily Study Buddy</p>
+        <h1>每日学习小助手</h1>
+      </div>
+      <nav class="nav-actions">
+        <button id="nav-dashboard" class="nav-btn nav-btn-active" type="button">主界面</button>
+        <button id="nav-send" class="nav-btn" type="button">立即体验</button>
+        <button id="nav-quiz" class="nav-btn" type="button">测验</button>
+        <button id="nav-history" class="nav-btn" type="button">个人中心</button>
+        <button id="nav-settings" class="nav-btn" type="button">设置</button>
+      </nav>
+    </header>
+
+    <main class="screen-shell">
+      <section id="view-dashboard" class="view view-active">
+        <div class="screen-grid">
+          <section class="hero panel">
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h2>一眼看到今天的学习状态</h2>
+              <p class="muted">输入邮箱完成设置后，系统会为这个邮箱持续记录学习内容、测验结果和发送轨迹。</p>
+            </div>
+            <div class="hero-stats">
+              <article>
+                <span id="stat-sessions">0</span>
+                <label>累计记录</label>
+              </article>
+              <article>
+                <span id="stat-quizzes">0</span>
+                <label>完成测验</label>
+              </article>
+              <article>
+                <span id="stat-streak">0</span>
+                <label>连续学习天数</label>
+              </article>
+              <article>
+                <span id="stat-accuracy">0%</span>
+                <label>平均正确率</label>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel summary-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Current</p>
+                <h2>当前账号</h2>
+              </div>
+            </div>
+            <div id="account-summary" class="card-area"></div>
+          </section>
+
+          <section class="panel summary-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Latest</p>
+                <h2>最近一次学习</h2>
+              </div>
+            </div>
+            <div id="latest-summary" class="card-area"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-send" class="view">
+        <div class="single-panel-grid">
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Actions</p>
+                <h2>立即体验</h2>
+              </div>
+            </div>
+            <div class="card-area">
+              <div class="card">
+                <strong>给当前邮箱立即发送内容</strong>
+                <p class="muted">定时发送和手动发送互不冲突，每次点击都会生成一条新的学习记录。</p>
+                <div class="action-row large-gap">
+                  <button id="send-morning" class="secondary-btn" type="button">发送早晨学习</button>
+                  <button id="send-evening" class="ghost-btn" type="button">发送晚间测验</button>
+                </div>
+              </div>
+              <div id="flash-message" class="flash-message hidden"></div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-quiz" class="view">
+        <div class="single-panel-grid">
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Quiz</p>
+                <h2>当前测验</h2>
+              </div>
+            </div>
+            <form id="quiz-form" class="quiz-layout"></form>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-history" class="view">
+        <div class="history-grid">
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">History</p>
+                <h2>学习记录</h2>
+              </div>
+            </div>
+            <div id="history-list" class="history-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Detail</p>
+                <h2>记录详情</h2>
+              </div>
+            </div>
+            <div id="history-detail" class="detail-area"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-settings" class="view">
+        <div class="single-panel-grid">
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Settings</p>
+                <h2>账号设置</h2>
+              </div>
+            </div>
+            <form id="profile-form" class="settings-layout">
+              <label>
+                接收邮箱
+                <input id="email" type="email" placeholder="you@example.com" required>
+              </label>
+
+              <div class="option-grid">
+                <button class="choice-btn" data-target="lesson-count" data-value="1" type="button">1 条 / 天</button>
+                <button class="choice-btn" data-target="lesson-count" data-value="2" type="button">2 条 / 天</button>
+                <button class="choice-btn" data-target="lesson-count" data-value="3" type="button">3 条 / 天</button>
+                <button class="choice-btn" data-target="lesson-count" data-value="4" type="button">4 条 / 天</button>
+                <button class="choice-btn" data-target="lesson-count" data-value="5" type="button">5 条 / 天</button>
+              </div>
+              <input id="lesson-count" type="hidden" value="2">
+
+              <div class="option-grid option-grid-wide">
+                <button class="choice-btn" data-target="content-type" data-value="spoken" type="button">英语口语</button>
+                <button class="choice-btn" data-target="content-type" data-value="vocabulary" type="button">词汇积累</button>
+                <button class="choice-btn" data-target="content-type" data-value="business" type="button">商务英语</button>
+                <button class="choice-btn" data-target="content-type" data-value="travel" type="button">旅行英语</button>
+                <button class="choice-btn" data-target="content-type" data-value="writing" type="button">邮件写作</button>
+                <button class="choice-btn" data-target="content-type" data-value="all" type="button">混合模式</button>
+              </div>
+              <input id="content-type" type="hidden" value="spoken">
+
+              <div class="two-column">
+                <label>
+                  自动发送早晨时间
+                  <input id="morning-time" type="time" value="09:00">
+                </label>
+                <label>
+                  自动发送晚上时间
+                  <input id="evening-time" type="time" value="18:00">
+                </label>
+              </div>
+
+              <button class="primary-btn" type="submit">保存设置并进入主界面</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

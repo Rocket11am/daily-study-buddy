@@ -1,0 +1,79 @@
+[
+  {
+    "type": "spoken",
+    "english": "That makes sense.",
+    "chinese": "这就说得通了。",
+    "scene": "对别人解释表示认同",
+    "example": "Oh, you took a taxi because it was raining. That makes sense."
+  },
+  {
+    "type": "spoken",
+    "english": "I'm still figuring it out.",
+    "chinese": "我还在摸索当中。",
+    "scene": "谈计划时表达尚未确定",
+    "example": "I haven't decided on the final plan yet. I'm still figuring it out."
+  },
+  {
+    "type": "spoken",
+    "english": "Let's play it by ear.",
+    "chinese": "我们到时候随机应变吧。",
+    "scene": "计划不确定时",
+    "example": "If the weather changes, let's play it by ear."
+  },
+  {
+    "type": "vocabulary",
+    "english": "Sustainable",
+    "chinese": "可持续的",
+    "scene": "环保和商业语境",
+    "example": "We need a more sustainable solution."
+  },
+  {
+    "type": "vocabulary",
+    "english": "Accurate",
+    "chinese": "准确的",
+    "scene": "描述信息是否精确",
+    "example": "The summary is short but accurate."
+  },
+  {
+    "type": "business",
+    "english": "Let's align on the priorities.",
+    "chinese": "我们先对齐一下优先级。",
+    "scene": "会议沟通",
+    "example": "Before we start, let's align on the priorities."
+  },
+  {
+    "type": "business",
+    "english": "I'll circle back tomorrow.",
+    "chinese": "我明天再回复你。",
+    "scene": "工作跟进",
+    "example": "I need to confirm the details, so I'll circle back tomorrow."
+  },
+  {
+    "type": "travel",
+    "english": "Is this seat taken?",
+    "chinese": "这个座位有人吗？",
+    "scene": "公共场合",
+    "example": "Excuse me, is this seat taken?"
+  },
+  {
+    "type": "travel",
+    "english": "I'd like to check in.",
+    "chinese": "我想办理入住。",
+    "scene": "酒店机场",
+    "example": "Hi, I'd like to check in. I have a reservation."
+  },
+  {
+    "type": "writing",
+    "english": "I appreciate your patience.",
+    "chinese": "感谢你的耐心。",
+    "scene": "邮件写作",
+    "example": "I appreciate your patience while we work on this issue."
+  },
+  {
+    "type": "writing",
+    "english": "Please find the attachment below.",
+    "chinese": "请查收下面的附件。",
+    "scene": "正式邮件",
+    "example": "Please find the attachment below for your review."
+  }
+]

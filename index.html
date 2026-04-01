@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal Glow - 目标管理 Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-card">
+        <p class="eyebrow">Goal Glow</p>
+        <h1>把目标做成一件会发光的事</h1>
+        <p class="muted">记录长期方向、拆出今天行动、留住每一次完成的成就感。</p>
+      </div>
+
+      <section class="panel form-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">New Goal</p>
+            <h2>创建目标</h2>
+          </div>
+        </div>
+        <form id="goal-form">
+          <label>
+            目标名称
+            <input name="title" type="text" maxlength="48" placeholder="例如：6个月内通过雅思 7 分" required>
+          </label>
+          <label>
+            目标意义
+            <textarea name="why" rows="3" maxlength="160" placeholder="例如：提升留学申请竞争力，让自己更有底气"></textarea>
+          </label>
+          <div class="two-column">
+            <label>
+              分类
+              <select name="category">
+                <option value="学习">学习</option>
+                <option value="健康">健康</option>
+                <option value="事业">事业</option>
+                <option value="财富">财富</option>
+                <option value="生活">生活</option>
+              </select>
+            </label>
+            <label>
+              截止日期
+              <input name="deadline" type="date" required>
+            </label>
+          </div>
+          <label>
+            阶段目标
+            <input name="milestone" type="text" maxlength="40" placeholder="例如：先稳定每周 4 次练习">
+          </label>
+          <label>
+            今日最小行动
+            <input name="task" type="text" maxlength="40" placeholder="例如：做 1 套听力 + 记 20 个单词">
+          </label>
+          <button class="primary-btn" type="submit">保存并点亮目标</button>
+        </form>
+      </section>
+
+      <section class="panel tip-panel">
+        <p class="eyebrow">Momentum Tip</p>
+        <h3>低谷也算前进</h3>
+        <p class="muted">今天状态一般时，完成“最小行动”也会记作推进。软件不惩罚停顿，只帮助你重新发力。</p>
+      </section>
+    </aside>
+
+    <main class="main-content">
+      <section class="hero panel">
+        <div>
+          <p class="eyebrow">Today</p>
+          <h2 id="hero-greeting">今天也在向目标靠近</h2>
+          <p id="hero-summary" class="muted">完成一个小动作，也是在给未来的自己交付成果。</p>
+        </div>
+        <div class="hero-stats">
+          <article>
+            <span id="active-goals-count">0</span>
+            <label>进行中目标</label>
+          </article>
+          <article>
+            <span id="completed-tasks-count">0</span>
+            <label>累计完成行动</label>
+          </article>
+          <article>
+            <span id="streak-count">0</span>
+            <label>连续推进天数</label>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="column">
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Goals</p>
+                <h2>长期目标</h2>
+              </div>
+            </div>
+            <div id="goals-list" class="goals-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Weekly Review</p>
+                <h2>本周推进感</h2>
+              </div>
+            </div>
+            <div id="weekly-grid" class="weekly-grid"></div>
+            <div class="weekly-caption">
+              <span>弱</span>
+              <div class="legend">
+                <i class="heat heat-0"></i>
+                <i class="heat heat-1"></i>
+                <i class="heat heat-2"></i>
+                <i class="heat heat-3"></i>
+              </div>
+              <span>强</span>
+            </div>
+          </section>
+        </div>
+
+        <div class="column">
+          <section class="panel spotlight-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Spotlight</p>
+                <h2>今日推进</h2>
+              </div>
+            </div>
+            <div id="spotlight-card" class="spotlight-card"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Records</p>
+                <h2>完成记录</h2>
+              </div>
+            </div>
+            <div id="records-list" class="records-list"></div>
+          </section>
+        </div>
+
+        <div class="column">
+          <section class="panel achievement-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Achievement</p>
+                <h2>成就墙</h2>
+              </div>
+            </div>
+            <div id="achievement-list" class="achievement-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Archive</p>
+                <h2>已达成目标</h2>
+              </div>
+            </div>
+            <div id="archive-list" class="archive-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="celebration" class="celebration" aria-live="polite"></div>
+
+  <template id="goal-card-template">
+    <article class="goal-card">
+      <div class="goal-card-top">
+        <div>
+          <span class="goal-category"></span>
+          <h3 class="goal-title"></h3>
+        </div>
+        <button class="ghost-btn" data-action="archive">达成目标</button>
+      </div>
+      <p class="goal-why"></p>
+      <div class="goal-meta">
+        <span class="goal-deadline"></span>
+        <span class="goal-milestone"></span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="goal-footer">
+        <span class="goal-progress-text"></span>
+        <button class="secondary-btn" data-action="complete">完成今日行动</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
