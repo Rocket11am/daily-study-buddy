@@ -429,16 +429,38 @@ function getSmtpConfig() {
 
 function smtpSend(options) {
   return new Promise((resolve, reject) => {
+    const timeoutMs = Number(process.env.SMTP_TIMEOUT_MS || 15000);
+    let finished = false;
     const socket = options.secure
       ? tls.connect(options.port, options.host, { servername: options.host, rejectUnauthorized: false }, onConnected)
       : net.connect(options.port, options.host, onConnected);
 
+    function fail(error) {
+      if (finished) return;
+      finished = true;
+      try {
+        socket.destroy();
+      } catch {}
+      reject(error);
+    }
+
+    function succeed() {
+      if (finished) return;
+      finished = true;
+      try {
+        socket.end();
+      } catch {}
+      resolve();
+    }
+
     socket.setEncoding("utf8");
-    socket.on("error", reject);
+    socket.setTimeout(timeoutMs, () => fail(new Error(`SMTP 连接超时（${timeoutMs}ms）`)));
+    socket.on("error", (error) => fail(error));
 
     let buffer = "";
     let waiting = null;
     socket.on("data", (chunk) => {
+      if (finished) return;
       buffer += chunk;
       if (!buffer.includes("\r\n")) return;
       const lines = buffer.split("\r\n");
@@ -454,7 +476,7 @@ function smtpSend(options) {
     });
 
     function onConnected() {
-      run().catch(reject);
+      run().catch((error) => fail(error));
     }
 
     function send(command) {
@@ -466,7 +488,6 @@ function smtpSend(options) {
         waiting = (line) => {
           if (!line.startsWith(prefix)) {
             rejectLine(new Error(`SMTP unexpected response: ${line}`));
-            socket.end();
             return;
           }
           resolveLine(line);
@@ -493,8 +514,7 @@ function smtpSend(options) {
       socket.write(`${buildMimeMessage(options)}\r\n.\r\n`);
       await waitCode("250");
       send("QUIT");
-      socket.end();
-      resolve();
+      succeed();
     }
   });
 }
